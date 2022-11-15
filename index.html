@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" />
     <title>terrain</title>
+    <meta charset="utf-8" />
     <meta name="description" content="terrain" />
+    <link rel="stylesheet" href="style.css" />
     <script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
     <script src="https://unpkg.com/aframe-event-set-component@^4.0.0/dist/aframe-event-set-component.min.js"></script>
-    <!--<script src="aframe-mouse-cursor-component.js"></script>-->
-    <!--<script src="https://rawgit.com/mayognaise/aframe-mouse-cursor-component/master/dist/aframe-mouse-cursor-component.min.js"></script>-->
     <script src="components.js" defer></script>
   </head>
   <body>
     <a-scene
       fog="type: linear; color: #AAA"
       reflection="directionalLight:a-light#dirlight;"
+      vr-mode-ui="enabled: false"
       renderer="antialias: true;
                    colorManagement: true;
                    sortObjects: true;
@@ -25,7 +25,6 @@
       <a-assets>
         <img id="groundTexture" src="https://cdn.aframe.io/a-painter/images/floor.jpg" crossorigin="anonymous" />
         <img id="skyTexture" src="https://cdn.aframe.io/a-painter/images/sky.jpg" crossorigin="anonymous" />
-        <img id="pin" src="pin.png" />
         <a-asset-item id="model" src="map.gltf"></a-asset-item>
       </a-assets>
       <a-text
@@ -36,7 +35,7 @@
         color="red"
         class="target"
         id="myCard"
-        info-card
+        visible="false"
       ></a-text>
       <a-text
         value="Punto 2"
@@ -46,8 +45,9 @@
         color="cyan"
         class="target"
         id="myCard2"
-        info-card
-      ></a-text><!-- Background sky. -->
+        visible="false"
+      ></a-text
+      ><!-- Background sky. -->
       <a-sky height="2048" radius="30" src="#skyTexture" theta-length="90" width="2048"></a-sky>
       <!-- Ground. -->
       <a-circle src="#groundTexture" rotation="-90 0 0" radius="32"></a-circle>
@@ -60,18 +60,43 @@
         radius="0.015"
         position="0.4 0.2 -2.75"
         class="pinbutton"
-        pinbutton="target: myCard"
+        pinbutton="target: .modal; card: 0"
       ></a-sphere>
-    <a-sphere
+      <a-sphere
         color="cyan"
         radius="0.015"
         position="0.1 0.15 -2.75"
         class="pinbutton"
-        pinbutton="target: myCard2"
+        pinbutton="target: .modal; card: 1"
       ></a-sphere>
-      <a-camera position="0 0.3 -1.8" zoom="1" id="cam" look-controls cursor="rayOrigin: mouse">
-        <!--<a-cursor material="color: red" raycaster="objects: .pinbutton"></a-cursor>-->
+      <a-sphere
+        color="orange"
+        radius="0.015"
+        position="-0.12 0.15 -2.75"
+        class="pinbutton"
+        pinbutton="target: .modal; card: 2"
+      ></a-sphere>
+      <a-camera
+        position="0 0.3 -1.8"
+        zoom="1"
+        id="cam"
+        look-controls
+        cursor="rayOrigin: mouse"
+        raycaster="objects: .pinbutton"
+      >
       </a-camera>
     </a-scene>
+    <div class="modal">
+      <button class="modal__close">&times;</button>
+      <div class="modal__content">
+        <p class="modal__title">Hello World</p>
+        <p class="modal__subtitle">Lorem ipsum dolor</p>
+        <p class="modal__text">
+          Ipsum quidem ullam tempore architecto facere possimus voluptatibus iusto? Deleniti dolorum ea excepturi
+          consectetur nostrum Laudantium iste aspernatur sequi voluptatum.
+        </p>
+      </div>
+    </div>
+    <script src="main.js"></script>
   </body>
 </html>
