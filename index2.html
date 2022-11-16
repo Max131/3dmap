@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>terrain 2</title>
+    <meta charset="utf-8" />
+    <meta name="description" content="terrain" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="aframe.min.js"></script>
+    <script src="aframe-event-set-component.min.js"></script>
+    <script src="components2.js" defer></script>
+  </head>
+  <body>
+    <a-scene
+      fog="type: linear; color: #AAA"
+      reflection="directionalLight:a-light#dirlight;"
+      vr-mode-ui="enabled: false"
+      renderer="antialias: true;
+                   colorManagement: true;
+                   sortObjects: true;
+                   physicallyCorrectLights: true;
+                   maxCanvasWidth: 1920;
+                   maxCanvasHeight: 1920;"
+    >
+      <a-light id="dirlight" intensity="1" light="castShadow:true;type:directional" position="1 1 1"></a-light>
+      <a-assets>
+        <img id="groundTexture" src="https://cdn.aframe.io/a-painter/images/floor.jpg" crossorigin="anonymous" />
+        <img id="skyTexture" src="https://cdn.aframe.io/a-painter/images/sky.jpg" crossorigin="anonymous" />
+        <img src="card1.png" id="card1" crossorigin="anonymous" />
+        <img src="card2.png" id="card2" crossorigin="anonymous" />
+        <img src="card3.png" id="card3" crossorigin="anonymous" />
+        <a-asset-item id="model" src="map.gltf"></a-asset-item>
+      </a-assets>
+      <a-text
+        value="Punto 1"
+        align="center"
+        geometry="primitive: plane; width: 0.00001"
+        position="-0.5 0.5 -4.5"
+        color="red"
+        class="target"
+        id="myCard"
+        visible="false"
+      ></a-text>
+      <a-text
+        value="Punto 2"
+        align="center"
+        geometry="primitive: plane; width: 0.00001"
+        position="-0.5 0.5 -4.5"
+        color="cyan"
+        class="target"
+        id="myCard2"
+        visible="false"
+      ></a-text
+      ><!-- Background sky. -->
+      <a-sky height="2048" radius="30" src="#skyTexture" theta-length="90" width="2048"></a-sky>
+      <!-- Ground. -->
+      <a-circle src="#groundTexture" rotation="-90 0 0" radius="32"></a-circle>
+      <!--Map-->
+      <a-entity id="map" gltf-model="#model" position="0 0.12 -5" scale="3 3 3"></a-entity>
+      <!--Primitives -->
+      <a-sphere
+        color="red"
+        radius="0.015"
+        position="0.4 0.2 -2.75"
+        class="pinbutton"
+        pinbutton="target: #modal1"
+      ></a-sphere>
+      <a-sphere
+        color="cyan"
+        radius="0.015"
+        position="0.1 0.15 -2.75"
+        class="pinbutton"
+        pinbutton="target: #modal2"
+      ></a-sphere>
+      <a-sphere
+        color="orange"
+        radius="0.015"
+        position="-0.12 0.15 -2.75"
+        class="pinbutton"
+        pinbutton="target: #modal3"
+      ></a-sphere>
+      <!--Layers-->
+      <a-entity
+        layer="src:#card1;type:quad;width:0.488;height:0.512"
+        position="-0.25 0.25 -3"
+        visible="false"
+        id="modal2"
+      ></a-entity>
+      <a-entity
+        layer="src:#card2;type:quad;width:0.488;height:0.512"
+        position="0.15 0.5 -3.01"
+        visible="false"
+        id="modal1"
+      ></a-entity>
+      <a-entity
+        layer="src:#card3;type:quad;width:0.488;height:0.512"
+        position="0.5 0.35 -3"
+        visible="false"
+        id="modal3"
+      ></a-entity>
+      <!--Camera-->
+      <a-camera
+        position="0 0.3 -1.8"
+        zoom="1"
+        id="cam"
+        look-controls
+        wasd-controls="acceleration:7"
+        cursor="rayOrigin: mouse"
+        raycaster="objects: .pinbutton"
+      >
+      </a-camera>
+    </a-scene>
+  </body>
+</html>
